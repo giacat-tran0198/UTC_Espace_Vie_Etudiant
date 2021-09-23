@@ -1,0 +1,52 @@
+server:
+  error:
+    include-message: always
+spring:
+  profiles:
+    active:
+      - dev
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      javax:
+        persistence:
+          validation:
+            mode: none
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+
+---
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:h2:./blog-prod
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: false
+blog:
+  upload-path: uploads-prod
+
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:h2:mem:blog-dev
+blog:
+  upload-path: uploads-dev
+
+---
+spring:
+  profiles: test
+blog:
+  upload-path: uploads-test
